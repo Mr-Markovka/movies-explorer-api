@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/Mr-Markovka/movies-explorer-api/issues"
   },
-  "homepage": "https://github.com/Mr-Markovka/movies-explorer-api#readme",
+  "homepage": "./",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "celebrate": "^14.0.0",
