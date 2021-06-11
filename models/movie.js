@@ -5,20 +5,15 @@ const movieSchema = new mongoose.Schema({
   country: {
     type: String,
     required: [true, 'Поле "country" должно быть заполнено'],
-    minlength: [2, 'минимальная длина поля — 2 символа'],
-    maxlength: [30, 'максимальная длина поля — 30 символов'],
   },
   director: {
     type: String,
     required: [true, 'Поле "director" должно быть заполнено'],
-    minlength: [2, 'минимальная длина поля — 2 символа'],
-    maxlength: [30, 'максимальная длина поля — 30 символов'],
   },
   duration: {
     type: Number,
     required: [true, 'Поле "duration" должно быть заполнено'],
   },
-
   year: {
     type: String,
     required: [true, 'Поле "year" должно быть заполнено'],
@@ -28,8 +23,6 @@ const movieSchema = new mongoose.Schema({
   description: {
     type: String,
     required: [true, 'Поле "description" должно быть заполнено'],
-    minlength: [2, 'минимальная длина поля — 2 символа'],
-    maxlength: [30, 'максимальная длина поля — 300 символов'],
   },
   image: {
     type: String,
@@ -67,14 +60,10 @@ const movieSchema = new mongoose.Schema({
   nameRU: {
     type: String,
     required: [true, 'Поле "nameRU" должно быть заполнено'],
-    minlength: [2, 'минимальная длина поля — 2 символа'],
-    maxlength: [30, 'максимальная длина поля — 30 символов'],
   },
   nameEN: {
     type: String,
     required: [true, 'Поле "nameEN" должно быть заполнено'],
-    minlength: [2, 'минимальная длина поля — 2 символа'],
-    maxlength: [30, 'максимальная длина поля — 30 символов'],
   },
 });
 

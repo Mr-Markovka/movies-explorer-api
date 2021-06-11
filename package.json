@@ -20,6 +20,9 @@
     "url": "https://github.com/Mr-Markovka/movies-explorer-api/issues"
   },
   "homepage": "./",
+  "prettier": {
+    "singleQuote": true
+  },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "celebrate": "^14.0.0",

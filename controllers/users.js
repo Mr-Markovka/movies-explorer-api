@@ -8,7 +8,6 @@ const SOLT_ROUNDS = 10;
 const MONGO_DUPLICATE_ERROR_CODE = 1100;
 
 const {
-  NotFoundError,
   BadRequestErr,
   UnauthorizedErr,
   ConflictErr,
@@ -26,10 +25,10 @@ const getUserInfo = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestErr('Неверный id'));
+      } else {
+        next(err);
       }
-      next(new NotFoundError(err.message));
-    })
-    .catch(next);
+    });
 };
 
 /* PATCH /users/me — обновляет профиль */
@@ -45,12 +44,17 @@ const changeUserInfo = (req, res, next) => {
     .orFail(new Error('Пользователь с таким id не найден'))
     .then((user) => res.send(user))
     .catch((err) => {
-      if (err.name === 'ValidationError' || err.name === 'CastError') {
+      if (
+        err.name === 'MongoError'
+        || err.code === MONGO_DUPLICATE_ERROR_CODE
+      ) {
+        next(new ConflictErr('Пользователь с переданным email уже существует'));
+      } else if (err.name === 'ValidationError') {
         next(new BadRequestErr('Невалидные данные'));
+      } else {
+        next(err);
       }
-      next(new NotFoundError(err.message));
-    })
-    .catch(next);
+    });
 };
 
 /* POST /signup — создаёт пользователя с переданными в теле запроса name, email и password. */
@@ -80,11 +84,12 @@ const createUser = (req, res, next) => {
         || err.code === MONGO_DUPLICATE_ERROR_CODE
       ) {
         next(new ConflictErr('Пользователь с переданным email уже существует'));
-      } else if (err.name === 'ValidationError' || err.name === 'CastError') {
+      } else if (err.name === 'ValidationError') {
         next(new BadRequestErr('Невалидные данные'));
+      } else {
+        next(err);
       }
-    })
-    .catch(next);
+    });
 };
 
 /* POST /signin */
@@ -104,8 +109,7 @@ const login = (req, res, next) => {
     })
     .catch(() => {
       next(new UnauthorizedErr('Неправильные почта или пароль'));
-    })
-    .catch(next);
+    });
 };
 
 module.exports = {

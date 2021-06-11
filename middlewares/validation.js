@@ -10,14 +10,12 @@ const validateRegisterBody = celebrate({
         'string.max': 'максимальная длина поля — 30 символов',
         'any.required': 'обязательное поле',
       }),
-    password: Joi.string().required().min(2).max(30)
+    password: Joi.string().required()
       .messages({
-        'string.min': 'минимальная длина поля — 8 символов',
         'any.required': 'обязательное поле',
       }),
     email: Joi.string()
       .required()
-      .min(2)
       .custom((value, helpers) => {
         if (validator.isEmail(value)) {
           return value;
@@ -32,14 +30,12 @@ const validateRegisterBody = celebrate({
 
 const validateLoginBody = celebrate({
   body: Joi.object().keys({
-    password: Joi.string().required().min(2).max(30)
+    password: Joi.string().required()
       .messages({
-        'string.min': 'минимальная длина поля — 8 символов',
         'any.required': 'обязательное поле',
       }),
     email: Joi.string()
       .required()
-      .min(2)
       .custom((value, helpers) => {
         if (validator.isEmail(value)) {
           return value;
@@ -63,7 +59,6 @@ const validateChangeUserInfo = celebrate({
         }),
       email: Joi.string()
         .required()
-        .min(2)
         .custom((value, helpers) => {
           if (validator.isEmail(value)) {
             return value;
@@ -93,25 +88,16 @@ const validateMovieId = celebrate({
 const validateCreateMovie = celebrate({
   body: Joi.object()
     .keys({
-      country: Joi.string().required().min(2).max(30)
+      country: Joi.string().required()
         .messages({
-          'string.min': 'минимальная длина поля — 2 символа',
-          'string.max': 'максимальная длина поля — 30 символов',
           'any.required': 'обязательное поле',
         }),
-      director: Joi.string().required().min(2).max(30)
+      director: Joi.string().required()
         .messages({
-          'string.min': 'минимальная длина поля — 2 символа',
-          'string.max': 'максимальная длина поля — 30 символов',
           'any.required': 'обязательное поле',
         }),
-      duration: Joi.number()
-        .min(1)
-        .max(300)
-        .integer()
+      duration: Joi.number().positive()
         .required()
-        .min(2)
-        .max(30)
         .messages({
           'any.required': 'обязательное поле',
         }),
@@ -125,64 +111,52 @@ const validateCreateMovie = celebrate({
           'string.max': 'максимальная длина поля — 4 символа',
           'any.required': 'обязательное поле',
         }),
-      description: Joi.string().required().min(2).max(300)
+      description: Joi.string().required()
         .messages({
-          'string.min': 'минимальная длина поля — 2 символа',
-          'string.max': 'максимальная длина поля — 300 символов',
           'any.required': 'обязательное поле',
         }),
       image: Joi.string()
         .required()
-        .pattern(
-          /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)/,
-        )
+        .custom((value, helpers) => {
+          if (validator.isURL(value)) {
+            return value;
+          }
+          return helpers.message('Поле image заполнено некорректно');
+        })
         .messages({
           'any.required': 'обязательное поле',
         }),
       trailer: Joi.string()
         .required()
-        .pattern(
-          /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)/,
-        )
+        .custom((value, helpers) => {
+          if (validator.isURL(value)) {
+            return value;
+          }
+          return helpers.message('Поле trailer заполнено некорректно');
+        })
         .messages({
           'any.required': 'обязательное поле',
         }),
       thumbnail: Joi.string()
         .required()
-        .pattern(
-          /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)/,
-        )
+        .custom((value, helpers) => {
+          if (validator.isURL(value)) {
+            return value;
+          }
+          return helpers.message('Поле thumbnail заполнено некорректно');
+        })
         .messages({
           'any.required': 'обязательное поле',
         }),
       nameRU: Joi.string()
         .required()
-        .min(2)
-        .max(30)
         .pattern(/^[а-яА-ЯёЁ0-9]+$/)
         .messages({
-          'string.min': 'минимальная длина поля — 2 символа',
-          'string.max': 'максимальная длина поля — 30 символов',
           'any.required': 'обязательное поле',
         }),
       nameEN: Joi.string()
         .required()
-        .min(2)
-        .max(30)
         .pattern(/^[a-zA-Z0-9]+$/)
-        .messages({
-          'string.min': 'минимальная длина поля — 2 символа',
-          'string.max': 'максимальная длина поля — 30 символов',
-          'any.required': 'обязательное поле',
-        }),
-      owner: Joi.string()
-        .required()
-        .custom((value, helpers) => {
-          if (ObjectId.isValid(value)) {
-            return value;
-          }
-          return helpers.message('Не валидный id');
-        })
         .messages({
           'any.required': 'обязательное поле',
         }),

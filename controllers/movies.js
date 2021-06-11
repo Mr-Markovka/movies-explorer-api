@@ -8,9 +8,10 @@ const getMovies = (req, res, next) => {
     .catch((err) => {
       if (err.statusCode === 404) {
         next(new NotFoundError(err.message));
+      } else {
+        next(err);
       }
-    })
-    .catch(next);
+    });
 };
 
 // POST /movies создаёт фильм с переданными в теле
@@ -49,9 +50,10 @@ const createMovie = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestErr('Невалидные данные'));
+      } else {
+        next(err);
       }
-    })
-    .catch(next);
+    });
 };
 
 // DELETE /movies/movieId удаляет сохранённый фильм по id
