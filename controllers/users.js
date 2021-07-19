@@ -7,21 +7,13 @@ const { NODE_ENV, JWT_SECRET_KEY } = process.env;
 const SOLT_ROUNDS = 10;
 const MONGO_DUPLICATE_ERROR_CODE = 1100;
 
-const {
-  BadRequestErr,
-  UnauthorizedErr,
-  ConflictErr,
-} = require('../errors');
+const { BadRequestErr, UnauthorizedErr, ConflictErr } = require('../errors');
 
 /* GET /users/me - возвращает информацию о текущем пользователе  */
 const getUserInfo = (req, res, next) => {
   User.findById(req.user._id)
     .orFail(new Error('Пользователь с таким id не найден'))
-    .then((user) => res.send({
-      name: user.name,
-      email: user.email,
-      _id: user._id,
-    }))
+    .then((user) => res.send({ name: user.name, email: user.email, _id: user._id }))
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequestErr('Неверный id'));
@@ -76,6 +68,7 @@ const createUser = (req, res, next) => {
       res.status(201).send({
         _id: user._id,
         email: user.email,
+        name: user.name,
       });
     })
     .catch((err) => {

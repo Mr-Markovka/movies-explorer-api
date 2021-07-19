@@ -10,10 +10,9 @@ const validateRegisterBody = celebrate({
         'string.max': 'максимальная длина поля — 30 символов',
         'any.required': 'обязательное поле',
       }),
-    password: Joi.string().required()
-      .messages({
-        'any.required': 'обязательное поле',
-      }),
+    password: Joi.string().required().messages({
+      'any.required': 'обязательное поле',
+    }),
     email: Joi.string()
       .required()
       .custom((value, helpers) => {
@@ -30,10 +29,9 @@ const validateRegisterBody = celebrate({
 
 const validateLoginBody = celebrate({
   body: Joi.object().keys({
-    password: Joi.string().required()
-      .messages({
-        'any.required': 'обязательное поле',
-      }),
+    password: Joi.string().required().messages({
+      'any.required': 'обязательное поле',
+    }),
     email: Joi.string()
       .required()
       .custom((value, helpers) => {
@@ -88,19 +86,15 @@ const validateMovieId = celebrate({
 const validateCreateMovie = celebrate({
   body: Joi.object()
     .keys({
-      country: Joi.string().required()
-        .messages({
-          'any.required': 'обязательное поле',
-        }),
-      director: Joi.string().required()
-        .messages({
-          'any.required': 'обязательное поле',
-        }),
-      duration: Joi.number().positive()
-        .required()
-        .messages({
-          'any.required': 'обязательное поле',
-        }),
+      country: Joi.string().required().messages({
+        'any.required': 'обязательное поле',
+      }),
+      director: Joi.string().required().messages({
+        'any.required': 'обязательное поле',
+      }),
+      duration: Joi.number().positive().required().messages({
+        'any.required': 'обязательное поле',
+      }),
       year: Joi.string()
         .required()
         .min(4)
@@ -111,10 +105,9 @@ const validateCreateMovie = celebrate({
           'string.max': 'максимальная длина поля — 4 символа',
           'any.required': 'обязательное поле',
         }),
-      description: Joi.string().required()
-        .messages({
-          'any.required': 'обязательное поле',
-        }),
+      description: Joi.string().required().messages({
+        'any.required': 'обязательное поле',
+      }),
       image: Joi.string()
         .required()
         .custom((value, helpers) => {
@@ -148,18 +141,12 @@ const validateCreateMovie = celebrate({
         .messages({
           'any.required': 'обязательное поле',
         }),
-      nameRU: Joi.string()
-        .required()
-        .pattern(/^[а-яА-ЯёЁ0-9]+$/)
-        .messages({
-          'any.required': 'обязательное поле',
-        }),
-      nameEN: Joi.string()
-        .required()
-        .pattern(/^[a-zA-Z0-9]+$/)
-        .messages({
-          'any.required': 'обязательное поле',
-        }),
+      nameRU: Joi.string().required().messages({
+        'any.required': 'обязательное поле',
+      }),
+      nameEN: Joi.string().required().messages({
+        'any.required': 'обязательное поле',
+      }),
       movieId: Joi.number().integer().required().messages({
         'any.required': 'обязательное поле',
       }),

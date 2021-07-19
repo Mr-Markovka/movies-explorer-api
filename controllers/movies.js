@@ -3,8 +3,11 @@ const { NotFoundError, BadRequestErr, ForbiddenErr } = require('../errors');
 
 // GET /movies возвращает все сохранённые пользователем фильмы
 const getMovies = (req, res, next) => {
-  Movie.find({})
-    .then((movies) => res.send(movies))
+  const owner = req.user._id;
+  Movie.find({ owner })
+    .then((movies) => {
+      res.send(movies);
+    })
     .catch((err) => {
       if (err.statusCode === 404) {
         next(new NotFoundError(err.message));
