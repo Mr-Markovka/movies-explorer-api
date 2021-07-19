@@ -102,7 +102,8 @@ const login = (req, res, next) => {
     })
     .catch(() => {
       next(new UnauthorizedErr('Неправильные почта или пароль'));
-    });
+    })
+    .catch(next);
 };
 
 module.exports = {
