@@ -18,7 +18,11 @@ const app = express();
 const { PORT = 3001 } = process.env;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: true,
+  exposedHeaders: '*',
+  credentials: true,
+}));
 
 mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
   useUnifiedTopology: true,
