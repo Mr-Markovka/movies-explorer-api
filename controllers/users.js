@@ -54,7 +54,7 @@ const createUser = (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    throw new UnauthorizedErr('Неправильные почта или пароль');
+    throw new UnauthorizedErr('createUser-Не задано одно из полей: почта или пароль');
   }
 
   bcrypt
@@ -101,7 +101,7 @@ const login = (req, res, next) => {
       res.send({ token });
     })
     .catch(() => {
-      next(new UnauthorizedErr('Неправильные почта или пароль'));
+      next(new UnauthorizedErr('login-Неправильные почта или пароль'));
     })
     .catch(next);
 };
