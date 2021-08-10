@@ -101,12 +101,10 @@ const login = (req, res, next) => {
       res.send({ token });
     })
     .catch((err) => {
-      if (err.status === 401) {
-        next(new UnauthorizedErr('Неправильные почта или пароль'));
-      } else {
-        next(err);
-      }
-    });
+      console.log(err);
+      next(new UnauthorizedErr('login-Неправильные почта или пароль'));
+    })
+    .catch(next);
 };
 
 module.exports = {
