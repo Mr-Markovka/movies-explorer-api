@@ -100,9 +100,8 @@ const login = (req, res, next) => {
       );
       res.send({ token });
     })
-    .catch((err) => {
-      console.log(err);
-      next(new UnauthorizedErr('login-Неправильные почта или пароль'));
+    .catch(() => {
+      next(new UnauthorizedErr('Неправильные почта или пароль'));
     })
     .catch(next);
 };

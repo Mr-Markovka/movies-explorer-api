@@ -13,18 +13,12 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const app = express();
 
-// const { PORT = 3001, MONGO_URL = 'mongodb://localhost:27017/bitfilmsdb' } =
-//   process.env;
-const { PORT = 3001 } = process.env;
+const { PORT = 3001, MONGO_URL = 'mongodb://localhost:27017/bitfilmsdb' } = process.env;
 
 app.use(express.json());
-app.use(cors({
-  origin: true,
-  exposedHeaders: '*',
-  credentials: true,
-}));
+app.use(cors());
 
-mongoose.connect('mongodb://localhost:27017/bitfilmsdb', {
+mongoose.connect(MONGO_URL, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useCreateIndex: true,
